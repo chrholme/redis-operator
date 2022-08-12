@@ -64,7 +64,7 @@ func (r *RedisFailoverKubeClient) EnsureSentinelDeployment(rf *redisfailoverv1.R
 		return err
 	}
 	d := generateSentinelDeployment(rf, labels, ownerRefs)
-	return r.K8SService.CreateOrUpdateDeployment(rf.Namespace, d)
+	return r.K8SService.CreateOrUpdateStatefulSet(rf.Namespace, d)
 }
 
 // EnsureRedisStatefulset makes sure the redis statefulset exists in the desired state

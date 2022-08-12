@@ -1,11 +1,13 @@
-FROM --platform=$BUILDPLATFORM golang:1.17-alpine AS build
+FROM --platform=$BUILDPLATFORM docker.io/golang:1.17-alpine AS build
 RUN apk --no-cache add \
   bash
 
 WORKDIR /src
 COPY . .
 
-ARG TARGETOS TARGETARCH VERSION
+ARG TARGETOS=linux
+ARG TARGETARCH=amd64
+ARG VERSION
 RUN GOOS=$TARGETOS GOARCH=$TARGETARCH VERSION=$VERSION ./scripts/build.sh
 
 FROM alpine:latest

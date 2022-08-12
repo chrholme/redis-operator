@@ -3,7 +3,10 @@
 [![Build Status](https://github.com/spotahome/redis-operator/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/spotahome/redis-operator)
 [![Go Report Card](https://goreportcard.com/badge/github.com/spotahome/redis-operator)](https://goreportcard.com/report/github.com/spotahome/redis-operator)
 
-Redis Operator creates/configures/manages redis-failovers atop Kubernetes.
+Redis Operator creates/configures/manages redis-failovers atop Kubernetes.  Forked from https://github.com/spotahome/redis-operator
+
+Operator changed to deploy Sentinel as Statefulset instead of deployment to allow applications to build a list of named 
+sentinel nodes for redundancy.
 
 ## Requirements
 

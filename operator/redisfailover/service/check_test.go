@@ -98,6 +98,7 @@ func TestCheckSentinelNumberError(t *testing.T) {
 
 	ms := &mK8SService.Services{}
 	ms.On("GetDeployment", namespace, rfservice.GetSentinelName(rf)).Once().Return(nil, errors.New(""))
+	ms.On("GetStatefulSet", namespace, rfservice.GetSentinelName(rf)).Once().Return(nil, errors.New(""))
 	mr := &mRedisService.Client{}
 
 	checker := rfservice.NewRedisFailoverChecker(ms, mr, log.DummyLogger{})
@@ -112,13 +113,14 @@ func TestCheckSentinelNumberFalse(t *testing.T) {
 	rf := generateRF()
 
 	wrongNumber := int32(4)
-	ss := &appsv1.Deployment{
-		Spec: appsv1.DeploymentSpec{
+	ss := &appsv1.StatefulSet{
+		Spec: appsv1.StatefulSetSpec{
 			Replicas: &wrongNumber,
 		},
 	}
 	ms := &mK8SService.Services{}
 	ms.On("GetDeployment", namespace, rfservice.GetSentinelName(rf)).Once().Return(ss, nil)
+	ms.On("GetStatefulSet", namespace, rfservice.GetSentinelName(rf)).Once().Return(ss, nil)
 	mr := &mRedisService.Client{}
 
 	checker := rfservice.NewRedisFailoverChecker(ms, mr, log.DummyLogger{})
@@ -133,13 +135,14 @@ func TestCheckSentinelNumberTrue(t *testing.T) {
 	rf := generateRF()
 
 	goodNumber := int32(3)
-	ss := &appsv1.Deployment{
-		Spec: appsv1.DeploymentSpec{
+	ss := &appsv1.StatefulSet{
+		Spec: appsv1.StatefulSetSpec{
 			Replicas: &goodNumber,
 		},
 	}
 	ms := &mK8SService.Services{}
 	ms.On("GetDeployment", namespace, rfservice.GetSentinelName(rf)).Once().Return(ss, nil)
+	ms.On("GetStatefulSet", namespace, rfservice.GetSentinelName(rf)).Once().Return(ss, nil)
 	mr := &mRedisService.Client{}
 
 	checker := rfservice.NewRedisFailoverChecker(ms, mr, log.DummyLogger{})

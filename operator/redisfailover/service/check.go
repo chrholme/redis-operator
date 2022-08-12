@@ -64,7 +64,7 @@ func (r *RedisFailoverChecker) CheckRedisNumber(rf *redisfailoverv1.RedisFailove
 
 // CheckSentinelNumber controlls that the number of deployed sentinel is the same than the requested on the spec
 func (r *RedisFailoverChecker) CheckSentinelNumber(rf *redisfailoverv1.RedisFailover) error {
-	d, err := r.k8sService.GetDeployment(rf.Namespace, GetSentinelName(rf))
+	d, err := r.k8sService.GetStatefulSet(rf.Namespace, GetSentinelName(rf))
 	if err != nil {
 		return err
 	}
@@ -209,7 +209,7 @@ func (r *RedisFailoverChecker) GetRedisesIPs(rf *redisfailoverv1.RedisFailover) 
 // GetSentinelsIPs returns the IPs of the Sentinel nodes
 func (r *RedisFailoverChecker) GetSentinelsIPs(rf *redisfailoverv1.RedisFailover) ([]string, error) {
 	sentinels := []string{}
-	rps, err := r.k8sService.GetDeploymentPods(rf.Namespace, GetSentinelName(rf))
+	rps, err := r.k8sService.GetStatefulSetPods(rf.Namespace, GetSentinelName(rf))
 	if err != nil {
 		return nil, err
 	}

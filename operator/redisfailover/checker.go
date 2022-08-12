@@ -11,7 +11,7 @@ const (
 	timeToPrepare = 2 * time.Minute
 )
 
-//UpdateRedisesPods if the running version of pods are equal to the statefulset one
+// UpdateRedisesPods if the running version of pods are equal to the statefulset one
 func (r *RedisFailoverHandler) UpdateRedisesPods(rf *redisfailoverv1.RedisFailover) error {
 	redises, err := r.rfChecker.GetRedisesIPs(rf)
 	if err != nil {
@@ -97,7 +97,7 @@ func (r *RedisFailoverHandler) CheckAndHeal(rf *redisfailoverv1.RedisFailover) e
 	// Number of redis master is 1
 	// All redis slaves have the same master
 	// All sentinels points to the same redis master
-	// Sentinel has not death nodes
+	// Sentinel has no dead nodes
 	// Sentinel knows the correct slave number
 	if err := r.rfChecker.CheckRedisNumber(rf); err != nil {
 		r.logger.Debug("Number of redis mismatch, this could be for a change on the statefulset")

@@ -2,7 +2,8 @@
 
 set -o errexit
 set -o nounset
-
+TARGETOS=linux
+TARGETARCH=amd64
 src=./cmd/redisoperator
 out=./bin/redis-operator
 

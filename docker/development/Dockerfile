@@ -1,4 +1,4 @@
-FROM golang:1.17-alpine
+FROM docker.io/golang:1.17-alpine
 
 ENV CODEGEN_VERSION="1.11.9"
 
